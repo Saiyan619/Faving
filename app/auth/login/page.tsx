@@ -43,7 +43,14 @@ export function LoginContent() {
       try {
         await login(values.value)
         console.log("Login successful, redirecting to:", from)
-        // Hard redirect to trigger middleware check
+        
+        // Wait a moment to ensure the cookie is set by the browser
+        // The cookie is httpOnly so we can't check it directly, but we wait
+        // to ensure the Set-Cookie header has been processed
+        await new Promise(resolve => setTimeout(resolve, 300))
+        
+        // Use window.location.href for a full page reload to ensure middleware runs
+        // This ensures the cookie is available when the middleware checks it
         window.location.href = from
       } catch (error) {
         console.error("Login submission error:", error)
