@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useForm } from "@tanstack/react-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -42,22 +42,13 @@ const formSchema = z.object({
     .max(50, "Password must be at most 50 characters."),
 })
 
-function LoginContent() {
+export function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const from = searchParams.get('from') || '/dashboard'
   const { login, isPending } = useLoginUser()
   const { user, isPending: isCheckingAuth } = useUser()
   const [showPassword, setShowPassword] = useState(false)
-
-  useEffect(() => {
-    if (user) {
-      console.log("✅ Already logged in, redirecting to dashboard...")
-      window.location.href = "/dashboard"
-    }
-  }, [user])
-
-  if (isCheckingAuth) return null
   const form = useForm({
     defaultValues: {
       email: "",
@@ -78,6 +69,15 @@ function LoginContent() {
       }
     },
   })
+
+  useEffect(() => {
+    if (user) {
+      console.log("Already logged in, redirecting to dashboard...")
+      window.location.href = "/dashboard"
+    }
+  }, [user])
+
+  if (isCheckingAuth) return null
   return (
     <div className="min-h-screen w-full bg-gray-50 flex items-center justify-center p-4 sm:p-6 lg:p-0">
       <div className="flex flex-col lg:flex-row w-full max-w-[1440px] lg:h-screen lg:overflow-hidden bg-white shadow-sm rounded-2xl overflow-hidden">
@@ -205,5 +205,13 @@ function LoginContent() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={null}>
+      <LoginContent />
+    </Suspense>
   )
 }
