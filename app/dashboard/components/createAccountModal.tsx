@@ -20,7 +20,7 @@ export function CreateAccountModal() {
     const [open, setOpen] = useState(false);
     const [name, setName] = useState("")
     const [type, setType] = useState("")
-    const [balance, setBalance] = useState("")
+    const [balance, setBalance] = useState(0)
     const [currency, setCurrency] = useState("")
 
     const handleCreate = async (e: React.FormEvent) => {
@@ -40,7 +40,7 @@ export function CreateAccountModal() {
             // Reset and close dialog
             setName("");
             setType("");
-            setBalance("");
+            setBalance(0);
             setCurrency("");
             setOpen(false);
         } catch (error) {
@@ -90,7 +90,7 @@ export function CreateAccountModal() {
                                 id="balance"
                                 type="number"
                                 value={balance}
-                                onChange={(e) => setBalance(e.target.value)}
+                                onChange={(e) => setBalance(Number(e.target.value))}
                                 placeholder="0.00"
                                 required
                             />
