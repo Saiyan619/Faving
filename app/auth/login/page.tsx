@@ -1,35 +1,17 @@
 "use client"
-import { useEffect, useState, Suspense } from "react"
+import { useState, Suspense } from "react"
 import { useForm } from "@tanstack/react-form"
-import { toast } from "sonner"
 import * as z from "zod"
 import { Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
   Field,
-  FieldDescription,
   FieldError,
-  FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
-import { Label } from "@/components/ui/label"
-import { useLoginUser, useUser } from "@/apis/auth"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useLoginUser } from "@/apis/auth"
+import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 
 const formSchema = z.object({
@@ -43,12 +25,11 @@ const formSchema = z.object({
 })
 
 export function LoginContent() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const from = searchParams.get('from') || '/dashboard'
   const { login, isPending } = useLoginUser()
-  const { user, isPending: isCheckingAuth } = useUser()
   const [showPassword, setShowPassword] = useState(false)
+  
   const form = useForm({
     defaultValues: {
       email: "",
@@ -61,8 +42,8 @@ export function LoginContent() {
       console.log("Submitting login form...", values.value)
       try {
         await login(values.value)
-        console.log("Login successful, hard redirecting to:", from)
-        // Hard redirect is more reliable for cross-site cookie synchronization
+        console.log("Login successful, redirecting to:", from)
+        // Hard redirect to trigger middleware check
         window.location.href = from
       } catch (error) {
         console.error("Login submission error:", error)
@@ -70,14 +51,8 @@ export function LoginContent() {
     },
   })
 
-  useEffect(() => {
-    if (user) {
-      console.log("Already logged in, redirecting to dashboard...")
-      window.location.href = "/dashboard"
-    }
-  }, [user])
+  // REMOVED the useEffect that was causing the refresh loop
 
-  if (isCheckingAuth) return null
   return (
     <div className="min-h-screen w-full bg-gray-50 flex items-center justify-center p-4 sm:p-6 lg:p-0">
       <div className="flex flex-col lg:flex-row w-full max-w-[1440px] lg:h-screen lg:overflow-hidden bg-white shadow-sm rounded-2xl overflow-hidden">
