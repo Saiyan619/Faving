@@ -13,6 +13,7 @@ import { DashboardSkeleton } from "@/app/dashboard/components/dashboard-skeleton
 export default function DashboardPage() {
     const { user, isPending, isError } = useUser();
     const { accounts, isPending: isAccountsPending } = useGetAllAccounts()
+    console.log("Dashboard auth state:", { user, isPending, isError })
     console.log("Accounts:", accounts)
     const router = useRouter()
     // console.log(user)

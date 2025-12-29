@@ -57,11 +57,14 @@ function LoginContent() {
       onSubmit: formSchema,
     },
     onSubmit: async (values) => {
-      console.log(values.value)
-      await login(values.value)
-      // When your done with the project, change the "push" to "replace"
-      router.push(from)
-      router.refresh()
+      console.log("Submitting login form...", values.value)
+      try {
+        await login(values.value)
+        console.log("Login successful, redirecting to:", from)
+        router.push(from)
+      } catch (error) {
+        console.error("Login submission error:", error)
+      }
     },
   })
   return (
