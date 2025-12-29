@@ -28,7 +28,7 @@ import {
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 import { Label } from "@/components/ui/label"
-import { useLoginUser } from "@/apis/auth"
+import { useLoginUser, useUser } from "@/apis/auth"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 
@@ -47,7 +47,17 @@ function LoginContent() {
   const searchParams = useSearchParams()
   const from = searchParams.get('from') || '/dashboard'
   const { login, isPending } = useLoginUser()
+  const { user, isPending: isCheckingAuth } = useUser()
   const [showPassword, setShowPassword] = React.useState(false)
+
+  React.useEffect(() => {
+    if (user) {
+      console.log("✅ Already logged in, redirecting to dashboard...")
+      window.location.href = "/dashboard"
+    }
+  }, [user])
+
+  if (isCheckingAuth) return null
   const form = useForm({
     defaultValues: {
       email: "",
