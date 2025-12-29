@@ -98,6 +98,7 @@ export function CreateAccountModal() {
                         <div className="grid gap-2">
                             <Label htmlFor="currency">Currency</Label>
                             <Input 
+                                disabled={true}
                                 id="currency"
                                 value={currency}
                                 onChange={(e) => setCurrency(e.target.value)}
