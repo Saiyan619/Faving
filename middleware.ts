@@ -1,4 +1,3 @@
-// middleware.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
 
@@ -14,14 +13,12 @@ export async function middleware(request: NextRequest) {
       url.searchParams.set('from', request.nextUrl.pathname)
       return NextResponse.redirect(url)
     }
-
+    
     try {
-      // Make sure JWT_SECRET is in your environment variables
       const secret = new TextEncoder().encode(process.env.JWT_SECRET!)
       await jwtVerify(token, secret)
       return NextResponse.next()
     } catch (error) {
-      // Token is invalid, clear it and redirect
       const url = new URL('/auth/login', request.url)
       url.searchParams.set('from', request.nextUrl.pathname)
       const response = NextResponse.redirect(url)
@@ -30,19 +27,18 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (isAuthPage && token) {
-    try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET!)
-      await jwtVerify(token, secret)
-      // User is already logged in, redirect to dashboard
-      return NextResponse.redirect(new URL('/dashboard', request.url))
-    } catch {
-      // Invalid token, let them access login page
-      const response = NextResponse.next()
-      response.cookies.delete('jwt')
-      return response
-    }
-  }
+  // REMOVE THIS ENTIRE BLOCK - let the login page handle its own redirect
+  // if (isAuthPage && token) {
+  //   try {
+  //     const secret = new TextEncoder().encode(process.env.JWT_SECRET!)
+  //     await jwtVerify(token, secret)
+  //     return NextResponse.redirect(new URL('/dashboard', request.url))
+  //   } catch {
+  //     const response = NextResponse.next()
+  //     response.cookies.delete('jwt')
+  //     return response
+  //   }
+  // }
 
   return NextResponse.next()
 }
