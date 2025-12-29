@@ -6,9 +6,17 @@ export async function middleware(request: NextRequest) {
   const isAuthPage = request.nextUrl.pathname.startsWith('/auth/login')
   
   const token = request.cookies.get('jwt')?.value
+  
+  // Debug logging (remove in production if needed)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[Middleware] Path:', request.nextUrl.pathname)
+    console.log('[Middleware] Has JWT cookie:', !!token)
+    console.log('[Middleware] All cookies:', request.cookies.getAll().map(c => c.name))
+  }
 
   if (isProtectedRoute) {
     if (!token) {
+      console.log('[Middleware] No token found, redirecting to login')
       const url = new URL('/auth/login', request.url)
       url.searchParams.set('from', request.nextUrl.pathname)
       return NextResponse.redirect(url)
@@ -17,8 +25,12 @@ export async function middleware(request: NextRequest) {
     try {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET!)
       await jwtVerify(token, secret)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('[Middleware] Token verified, allowing access')
+      }
       return NextResponse.next()
     } catch (error) {
+      console.log('[Middleware] Token verification failed:', error)
       const url = new URL('/auth/login', request.url)
       url.searchParams.set('from', request.nextUrl.pathname)
       const response = NextResponse.redirect(url)
@@ -27,19 +39,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // REMOVE THIS ENTIRE BLOCK - let the login page handle its own redirect
-  // if (isAuthPage && token) {
-  //   try {
-  //     const secret = new TextEncoder().encode(process.env.JWT_SECRET!)
-  //     await jwtVerify(token, secret)
-  //     return NextResponse.redirect(new URL('/dashboard', request.url))
-  //   } catch {
-  //     const response = NextResponse.next()
-  //     response.cookies.delete('jwt')
-  //     return response
-  //   }
-  // }
-
+  // Allow login page to load without redirect
   return NextResponse.next()
 }
 

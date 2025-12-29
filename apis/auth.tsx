@@ -47,10 +47,22 @@ export const useLoginUser = () => {
     const loginUser = async (userData: SignInUserData) => {
         try {
             const response = await api.post("/auth/login", userData)
-            console.log(response.data)
+            console.log("Login API Response:", response)
+            console.log("Response headers:", response.headers)
+            console.log("Response data:", response.data)
+            
+            // Check if Set-Cookie header is present (though it might not be visible due to httpOnly)
+            const setCookieHeader = response.headers['set-cookie']
+            if (setCookieHeader) {
+                console.log("Set-Cookie header received:", setCookieHeader)
+            } else {
+                console.warn("No Set-Cookie header in response - cookie might not be set!")
+            }
+            
             const data = response.data;
             return data
         } catch (error) {
+            console.error("Login API Error:", error)
             throw error;
         }
     }

@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { useLoginUser } from "@/apis/auth"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 import Link from "next/link"
+import { api } from "@/lib/axios"
 
 const formSchema = z.object({
   email: z
@@ -26,6 +27,7 @@ const formSchema = z.object({
 
 export function LoginContent() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const from = searchParams.get('from') || '/dashboard'
   const { login, isPending } = useLoginUser()
   const [showPassword, setShowPassword] = useState(false)
@@ -41,17 +43,35 @@ export function LoginContent() {
     onSubmit: async (values) => {
       console.log("Submitting login form...", values.value)
       try {
-        await login(values.value)
-        console.log("Login successful, redirecting to:", from)
+        const response = await login(values.value)
+        console.log("Login successful, response:", response)
         
-        // Wait a moment to ensure the cookie is set by the browser
-        // The cookie is httpOnly so we can't check it directly, but we wait
-        // to ensure the Set-Cookie header has been processed
-        await new Promise(resolve => setTimeout(resolve, 300))
+        // Check if we got a successful response
+        if (!response) {
+          console.error("No response from login")
+          return
+        }
         
-        // Use window.location.href for a full page reload to ensure middleware runs
-        // This ensures the cookie is available when the middleware checks it
-        window.location.href = from
+        console.log("Waiting for cookie to be set...")
+        // Wait for cookie to be set
+        await new Promise(resolve => setTimeout(resolve, 500))
+        
+        // Verify cookie is accessible by making a test request
+        try {
+          console.log("Verifying authentication...")
+          const testResponse = await api.get("/auth/me")
+          console.log("Auth verification successful:", testResponse.data)
+          
+          // Cookie is confirmed to be working, now redirect
+          console.log("Redirecting to:", from)
+          // Use window.location.replace for a clean redirect
+          window.location.replace(from)
+        } catch (authError) {
+          console.error("Auth verification failed - cookie might not be set:", authError)
+          // Still try to redirect, but log the issue
+          console.warn("Attempting redirect anyway...")
+          window.location.replace(from)
+        }
       } catch (error) {
         console.error("Login submission error:", error)
       }
