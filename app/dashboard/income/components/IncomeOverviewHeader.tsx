@@ -36,35 +36,35 @@ export function IncomeOverviewHeader() {
     }
 
     return (
-        <div className="w-full rounded-3xl h-48 bg-emerald-700 p-6 sm:p-8 text-white relative overflow-hidden shadow-xl">
+        <div className="w-full rounded-3xl min-h-48 bg-emerald-700 p-4 sm:p-6 md:p-8 text-white relative overflow-hidden shadow-xl">
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
             {/* Header Section */}
-            <div className="relative z-10 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="relative z-10 mb-4 sm:mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
                 <div>
-                    <h2 className="text-md sm:text-lg font-bold tracking-tight">
+                    <h2 className="text-sm sm:text-md md:text-lg font-bold tracking-tight">
                         Total Income
                     </h2>
-                    <p className="text-emerald-200/80 mt-1">Track all your earnings and revenue streams.</p>
+                    <p className="text-emerald-200/80 mt-0.5 sm:mt-1 text-xs sm:text-sm hidden sm:block">Track all your earnings and revenue streams.</p>
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <div className="px-4 py-2 rounded-lg bg-emerald-900/50 backdrop-blur-sm border border-white/10 text-sm font-medium">
-                        Transactions: <span className="text-emerald-300 font-bold ml-2">{incomeTransactions.length}</span>
+                    <div className="px-2 sm:px-4 py-1 sm:py-2 rounded-lg bg-emerald-900/50 backdrop-blur-sm border border-white/10 text-xs sm:text-sm font-medium">
+                        Transactions: <span className="text-emerald-300 font-bold ml-1 sm:ml-2">{incomeTransactions.length}</span>
                     </div>
                 </div>
             </div>
 
-            {/* Cards Grid */}
-            <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-4xl sm:text-5xl font-bold tracking-tight">{formatCurrency(totalAmount)}</h2>
+            {/* Big Number and Buttons */}
+            <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">{formatCurrency(totalAmount)}</h2>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                     <IncomeDialog />
-                    <Button className="bg-white text-emerald-700 hover:bg-emerald-50">Export Income</Button>
+                    <Button className="bg-white text-emerald-700 hover:bg-emerald-50 text-xs sm:text-sm px-3 sm:px-4 h-9 sm:h-10">Export Income</Button>
                 </div>
             </div>
         </div>
