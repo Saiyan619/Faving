@@ -60,8 +60,9 @@ function LoginContent() {
       console.log("Submitting login form...", values.value)
       try {
         await login(values.value)
-        console.log("Login successful, redirecting to:", from)
-        router.push(from)
+        console.log("Login successful, hard redirecting to:", from)
+        // Hard redirect is more reliable for cross-site cookie synchronization
+        window.location.href = from
       } catch (error) {
         console.error("Login submission error:", error)
       }
