@@ -1,5 +1,5 @@
 "use client"
-import { useState, Suspense } from "react"
+import { useState, Suspense, useEffect } from "react"
 import { useForm } from "@tanstack/react-form"
 import * as z from "zod"
 import { Eye, EyeOff } from "lucide-react"
@@ -10,7 +10,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { useLoginUser } from "@/apis/auth"
+import { useLoginUser, useUser } from "@/apis/auth"
 import { useSearchParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import { api } from "@/lib/axios"
@@ -30,7 +30,16 @@ export function LoginContent() {
   const router = useRouter()
   const from = searchParams.get('from') || '/dashboard'
   const { login, isPending } = useLoginUser()
+  const { user, isPending: isUserPending } = useUser()
   const [showPassword, setShowPassword] = useState(false)
+  
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    if (!isUserPending && user) {
+      console.log("User already logged in, redirecting to dashboard")
+      router.push(from)
+    }
+  }, [user, isUserPending, router, from])
   
   const form = useForm({
     defaultValues: {
