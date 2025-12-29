@@ -30,16 +30,26 @@ export function LoginContent() {
   const router = useRouter()
   const from = searchParams.get('from') || '/dashboard'
   const { login, isPending } = useLoginUser()
-  const { user, isPending: isUserPending } = useUser()
+  const { user, isPending: isUserPending, isError } = useUser()
   const [showPassword, setShowPassword] = useState(false)
+  const [hasCheckedAuth, setHasCheckedAuth] = useState(false)
   
   // Redirect to dashboard if already logged in
+  // Only check once to avoid loops
   useEffect(() => {
-    if (!isUserPending && user) {
-      console.log("User already logged in, redirecting to dashboard")
-      router.push(from)
+    // Only check if we haven't checked yet and user data is loaded
+    if (!hasCheckedAuth && !isUserPending) {
+      setHasCheckedAuth(true)
+      
+      // If user exists, redirect to dashboard
+      if (user) {
+        console.log("User already logged in, redirecting to dashboard")
+        router.push(from)
+      }
+      // If error (401), user is logged out - that's fine, stay on login page
+      // The axios interceptor won't redirect because we're already on login page
     }
-  }, [user, isUserPending, router, from])
+  }, [user, isUserPending, hasCheckedAuth, router, from])
   
   const form = useForm({
     defaultValues: {
