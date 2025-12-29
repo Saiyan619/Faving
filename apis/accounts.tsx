@@ -34,11 +34,9 @@ export const useCreateAccount = () => {
     const createAccounts = async (createAccData: createAccData) => {
         try {
             const response = await api.post("/accounts", createAccData)
-            console.log(response.data)
             const data = response.data
             return data;
         } catch (error) {
-            console.log(error)
             throw error
         }
     }
@@ -63,11 +61,9 @@ export const useGetAllAccounts = () => {
     const getAllAccounts = async () => {
         try {
             const response = await api.get("/accounts");
-            console.log(response.data);
             const data = response.data;
             return data;
         } catch (error) {
-            console.log(error)
             throw error
         }
     }
@@ -87,11 +83,9 @@ export const useGetAccById = (id: string | undefined) => {
         }
         try {
             const response = await api.get(`/accounts/${id}`)
-            console.log(response.data)
             const data = response.data
             return data;
         } catch (error) {
-            console.log(error)
             throw error
         }
     }
@@ -108,11 +102,9 @@ export const useUpdateAccount = (id: string) => {
     const updateAccount = async (updateAccData: UpdateAccountRequest) => {
         try {
             const response = await api.put(`/accounts/${id}`, updateAccData)
-            console.log(response.data)
             const data = response.data
             return data;
         } catch (error) {
-            console.log(error)
             throw error
         }
     }
@@ -135,11 +127,9 @@ export const useDeleteAccount = (id: string) => {
     const deleteAccount = async () => {
         try {
             const response = await api.delete(`/accounts/${id}`)
-            console.log(response.data)
             const data = response.data
             return data;
         } catch (error) {
-            console.log(error)
             throw error
         }
     }

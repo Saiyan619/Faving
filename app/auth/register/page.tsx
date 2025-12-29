@@ -51,14 +51,7 @@ export default function Register() {
   const { register, isPending } = useRegisterUser()
   const router = useRouter()
 
-  // const handleRegistration = () =>{
-  // const data = {
-  //   name,
-  //   email,
-  //   password
-  // }
-  // console.log(data)
-  // }
+
   const form = useForm({
     defaultValues: {
       name: "",
@@ -69,13 +62,11 @@ export default function Register() {
       onSubmit: formSchema,
     },
     onSubmit: async (values) => {
-      console.log(values.value)
       try {
         await register(values.value)
         router.push("/auth/login")
       } catch (error) {
         // Error handling is managed by the mutation hook's onError
-        console.error("Registration failed:", error)
       }
     },
   })

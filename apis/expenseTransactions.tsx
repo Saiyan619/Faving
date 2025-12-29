@@ -14,11 +14,9 @@ export const useAddExpense = () => {
     const addExp = async (props: AddExpenseProps) => {
         try {
             const response = await api.post("/transactions/expense", props);
-            console.log(response.data);
             const data = response.data;
             return data;
         } catch (error) {
-            console.log(error);
             throw error;
         }
     };

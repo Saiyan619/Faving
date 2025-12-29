@@ -33,24 +33,23 @@ export function LoginContent() {
   const { user, isPending: isUserPending, isError } = useUser()
   const [showPassword, setShowPassword] = useState(false)
   const [hasCheckedAuth, setHasCheckedAuth] = useState(false)
-  
+
   // Redirect to dashboard if already logged in
   // Only check once to avoid loops
   useEffect(() => {
     // Only check if we haven't checked yet and user data is loaded
     if (!hasCheckedAuth && !isUserPending) {
       setHasCheckedAuth(true)
-      
+
       // If user exists, redirect to dashboard
       if (user) {
-        console.log("User already logged in, redirecting to dashboard")
         router.push(from)
       }
       // If error (401), user is logged out - that's fine, stay on login page
       // The axios interceptor won't redirect because we're already on login page
     }
   }, [user, isUserPending, hasCheckedAuth, router, from])
-  
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -60,39 +59,30 @@ export function LoginContent() {
       onSubmit: formSchema,
     },
     onSubmit: async (values) => {
-      console.log("Submitting login form...", values.value)
       try {
         const response = await login(values.value)
-        console.log("Login successful, response:", response)
-        
+
         // Check if we got a successful response
         if (!response) {
-          console.error("No response from login")
           return
         }
-        
-        console.log("Waiting for cookie to be set...")
+
         // Wait for cookie to be set
         await new Promise(resolve => setTimeout(resolve, 500))
-        
+
         // Verify cookie is accessible by making a test request
         try {
-          console.log("Verifying authentication...")
-          const testResponse = await api.get("/auth/me")
-          console.log("Auth verification successful:", testResponse.data)
-          
+          await api.get("/auth/me")
+
           // Cookie is confirmed to be working, now redirect
-          console.log("Redirecting to:", from)
           // Use window.location.replace for a clean redirect
           window.location.replace(from)
         } catch (authError) {
-          console.error("Auth verification failed - cookie might not be set:", authError)
-          // Still try to redirect, but log the issue
-          console.warn("Attempting redirect anyway...")
+          // Still try to redirect
           window.location.replace(from)
         }
       } catch (error) {
-        console.error("Login submission error:", error)
+        // Error handling is managed by the mutation hook's onError
       }
     },
   })

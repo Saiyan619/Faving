@@ -31,12 +31,9 @@ export function CreateAccountModal() {
             balance: Number(balance),
             currency
         }
-        console.log("Submitting:", data);
-        
         try {
             await CreateAcc(data);
-            console.log("Success!");
-            
+
             // Reset and close dialog
             setName("");
             setType("");
@@ -44,7 +41,6 @@ export function CreateAccountModal() {
             setCurrency("");
             setOpen(false);
         } catch (error) {
-            console.error("Error:", error);
         }
     }
 
@@ -66,7 +62,7 @@ export function CreateAccountModal() {
                     <div className="grid gap-4 py-4">
                         <div className="grid gap-2">
                             <Label htmlFor="name">Name</Label>
-                            <Input 
+                            <Input
                                 id="name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
@@ -76,7 +72,7 @@ export function CreateAccountModal() {
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="type">Type</Label>
-                            <Input 
+                            <Input
                                 id="type"
                                 value={type}
                                 onChange={(e) => setType(e.target.value)}
@@ -87,7 +83,7 @@ export function CreateAccountModal() {
                         <div className="grid gap-2">
                             <Label htmlFor="balance">Balance</Label>
                             <Input
-                                disabled={true} 
+                                disabled={true}
                                 id="balance"
                                 type="number"
                                 value={balance}
@@ -98,7 +94,7 @@ export function CreateAccountModal() {
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="currency">Currency</Label>
-                            <Input 
+                            <Input
                                 id="currency"
                                 value={currency}
                                 onChange={(e) => setCurrency(e.target.value)}
@@ -108,9 +104,9 @@ export function CreateAccountModal() {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button 
-                            type="button" 
-                            variant="outline" 
+                        <Button
+                            type="button"
+                            variant="outline"
                             onClick={() => setOpen(false)}
                         >
                             Cancel

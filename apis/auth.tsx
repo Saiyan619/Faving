@@ -12,16 +12,15 @@ interface SignInUserData {
     password: string
 }
 interface getUserData {
-  _id: string;
-  email: string;
-  name: string;
+    _id: string;
+    email: string;
+    name: string;
 }
 
 export const useRegisterUser = () => {
     const registerUser = async (userData: SignUpUserData) => {
         try {
             const response = await api.post("/auth/register", userData)
-            console.log(response.data)
             const data = response.data;
             return data
         } catch (error) {
@@ -47,22 +46,9 @@ export const useLoginUser = () => {
     const loginUser = async (userData: SignInUserData) => {
         try {
             const response = await api.post("/auth/login", userData)
-            console.log("Login API Response:", response)
-            console.log("Response headers:", response.headers)
-            console.log("Response data:", response.data)
-            
-            // Check if Set-Cookie header is present (though it might not be visible due to httpOnly)
-            const setCookieHeader = response.headers['set-cookie']
-            if (setCookieHeader) {
-                console.log("Set-Cookie header received:", setCookieHeader)
-            } else {
-                console.warn("No Set-Cookie header in response - cookie might not be set!")
-            }
-            
             const data = response.data;
             return data
         } catch (error) {
-            console.error("Login API Error:", error)
             throw error;
         }
     }
@@ -84,7 +70,6 @@ export const useLogoutUser = () => {
     const logoutUser = async () => {
         try {
             const response = await api.post("/auth/logout")
-            console.log(response.data)
             const data = response.data;
             return data
         } catch (error) {

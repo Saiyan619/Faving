@@ -50,10 +50,8 @@ export const useGetOverview = () => {
     const getOverview = async () => {
         try {
             const response = await api.get("/stats/overview");
-            console.log("Overview:", response.data);
             return response.data;
         } catch (error) {
-            console.log(error);
             throw error;
         }
     };
@@ -71,10 +69,8 @@ export const useGetExpenseCategories = () => {
     const getExpenseCategories = async () => {
         try {
             const response = await api.get("/stats/categories/expense");
-            console.log("Expense Categories:", response.data);
             return response.data;
         } catch (error) {
-            console.log(error);
             throw error;
         }
     };
@@ -92,10 +88,8 @@ export const useGetIncomeCategories = () => {
     const getIncomeCategories = async () => {
         try {
             const response = await api.get("/stats/categories/income");
-            console.log("Income Categories:", response.data);
             return response.data;
         } catch (error) {
-            console.log(error);
             throw error;
         }
     };
@@ -113,10 +107,8 @@ export const useGetMonthlyStats = () => {
     const getMonthlyStats = async () => {
         try {
             const response = await api.get("/stats/monthly");
-            console.log("Monthly Stats:", response.data);
             return response.data;
         } catch (error) {
-            console.log(error);
             throw error;
         }
     };
@@ -134,10 +126,8 @@ export const useGetDailyStats = () => {
     const getDailyStats = async () => {
         try {
             const response = await api.get("/stats/daily");
-            console.log("Daily Stats:", response.data);
             return response.data;
         } catch (error) {
-            console.log(error);
             throw error;
         }
     };
@@ -155,10 +145,8 @@ export const useGetYearlyStats = () => {
     const getYearlyStats = async () => {
         try {
             const response = await api.get("/stats/yearly");
-            console.log("Yearly Stats:", response.data);
             return response.data;
         } catch (error) {
-            console.log(error);
             throw error;
         }
     };
