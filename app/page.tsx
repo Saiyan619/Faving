@@ -6,36 +6,21 @@ import { ArrowRight } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="relative min-h-screen">
       {/* Background Effect */}
-      <div style={{ width: '100%', height: '600px', position: 'relative' }}>
-
+      <div className="fixed inset-0 z-0">
         <GridDistortion
-
           imageSrc="/original-b1c45dd59738933d055aa91878cd62bf.png"
-
           grid={15}
-
           mouse={0.12}
-
           strength={0.20}
-
           relaxation={0.9}
-
-          className="custom-class"
-
+          className="w-full h-full"
         />
       </div>
 
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 pointer-events-none">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-
-          {/* Badge / Pill */}
-          <div className="inline-flex items-center px-3 py-1 rounded-full border border-gray-200 bg-white/50 backdrop-blur-md mb-4 animate-fade-in-up">
-            <span className="text-xs font-medium tracking-wide text-cyan-600 uppercase">
-              FAVING V1.0
-            </span>
-          </div>
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 pointer-events-none">
+        <div className="max-w-4xl mx-auto text-center space-y-8 py-20">
 
           {/* Hero Title */}
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 drop-shadow-sm">
@@ -81,7 +66,6 @@ export default function Home() {
           <p>Trusted by forward-thinking investors worldwide.</p>
         </div>
       </div>
-
     </div>
   );
 }
