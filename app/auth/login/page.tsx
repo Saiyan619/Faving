@@ -1,5 +1,5 @@
 "use client"
-import * as React from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "@tanstack/react-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -48,9 +48,9 @@ function LoginContent() {
   const from = searchParams.get('from') || '/dashboard'
   const { login, isPending } = useLoginUser()
   const { user, isPending: isCheckingAuth } = useUser()
-  const [showPassword, setShowPassword] = React.useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (user) {
       console.log("✅ Already logged in, redirecting to dashboard...")
       window.location.href = "/dashboard"
@@ -205,13 +205,5 @@ function LoginContent() {
         </div>
       </div>
     </div>
-  )
-}
-
-export default function Login() {
-  return (
-    <React.Suspense fallback={null}>
-      <LoginContent />
-    </React.Suspense>
   )
 }
