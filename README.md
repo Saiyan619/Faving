@@ -1,4 +1,4 @@
-# Personal Finance Manager
+# Faving
 
 A robust, full-stack web application designed for effective personal finance management. Users can create and manage multiple accounts (e.g., wallets, bank accounts, cash), track income and expenses, perform transfers between accounts, and gain insights through detailed analytics.
 
@@ -14,6 +14,6 @@ A robust, full-stack web application designed for effective personal finance man
   - Backend: Node.js, Express, TypeScript, Mongoose.
   - Database: MongoDB.
 
-This project emphasizes security, scalability, and real-world financial best practices, making it a production-ready portfolio demonstration of full-stack development in fintech-inspired applications.
+This project emphasizes security, scalability, and real-world financial best practices, making it a production-ready demonstration of full-stack development in fintech-inspired applications.
 
 Live Demo: https://faving.vercel.app
