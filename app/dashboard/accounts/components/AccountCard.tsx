@@ -45,7 +45,7 @@ export function AccountCard({ account }: AccountCardProps) {
     const Icon = style.icon;
 
     return (
-        <Link href={`/dashboard/accounts/${account._id}`}>
+        // <Link href={`/dashboard/accounts/${account._id}`}>
             <Card className={`group relative bg-white border ${style.border} hover:shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-1`}>
                 <CardContent className="p-5">
                     {/* Header: Icon and Menu */}
@@ -94,6 +94,6 @@ export function AccountCard({ account }: AccountCardProps) {
                     </div>
                 </CardContent>
             </Card>
-        </Link>
+        // </Link>
     );
 }
