@@ -11,10 +11,21 @@ interface AccountsOverviewProps {
 }
 
 // Helper to format currency (converts cents to display value)
-const formatCurrency = (amountInCents: number, currency: string = "EUR") => {
-    const amount = amountInCents / 100;
-    return new Intl.NumberFormat("de-DE", { style: "currency", currency }).format(amount);
-};
+// const formatCurrency = (amountInCents: number, currency: string = "EUR") => {
+//     const amount = amountInCents / 100;
+//     return new Intl.NumberFormat("de-DE", { style: "currency", currency }).format(amount);
+// };
+
+const formatCurrency = (amount: number) => {
+        return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amount);
+    };
+
+// const formatCurrency = (amount: number, currency: string = "NGN") => {
+//     return new Intl.NumberFormat("en-NG", { 
+//         style: "currency", 
+//         currency: currency 
+//     }).format(amount);
+// };
 
 // Get icon color based on account type
 const getAccountStyle = (type: string) => {
@@ -81,7 +92,7 @@ export function AccountsOverview({ userName, accounts }: AccountsOverviewProps) 
                                 <CardContent>
                                     <p className="text-teal-100 text-sm font-medium mb-1">{account.name}</p>
                                     <CardTitle className="text-2xl font-bold tracking-wide">
-                                        {formatCurrency(account.balance, account.currency)}
+                                        {formatCurrency(account.balance/100)} {account.currency}
                                     </CardTitle>
                                     <div className="mt-2 flex items-center text-teal-300/80 text-xs font-medium">
                                         <span className="capitalize">{account.type}</span>

@@ -31,7 +31,7 @@ export function AnalyticsHeader() {
     const avgTransaction = transactionCount > 0 ? totalVolume / transactionCount : 0;
 
     return (
-        <div className="w-full rounded-3xl bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500 p-6 sm:p-8 text-white relative overflow-hidden shadow-xl">
+        <div className="w-full rounded-3xl bg-gradient-to-r from-blue-600 via-blue-600 to-blue-500 p-6 sm:p-8 text-white relative overflow-hidden shadow-xl">
             {/* Background decorations */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
             <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-white/5 rounded-full blur-2xl translate-y-1/2 pointer-events-none" />

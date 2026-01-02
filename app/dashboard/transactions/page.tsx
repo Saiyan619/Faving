@@ -7,7 +7,7 @@ const TransactionsPage = () => {
     return (
         <div className="p-4 md:p-8 w-full max-w-7xl mx-auto space-y-8">
             <TransactionsHeader />
-            <TransactionsStats />
+            {/* <TransactionsStats /> */}
             <TransactionsList />
         </div>
     )
